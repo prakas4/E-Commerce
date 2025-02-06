@@ -128,12 +128,12 @@ const Footer = () => {
   </div>
   {/* Copyright End */}
   {/* Back to Top */}
-  <Link
-    to=""
+  <a
+    href="#"
     className="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"
   >
     <i className="bi bi-arrow-up" />
-  </Link>
+  </a>
 </>
 
    </>

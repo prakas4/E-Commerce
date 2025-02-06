@@ -7,9 +7,9 @@ import HomePage from "./HomePage";
 import About from "./About";
 import Service from "./Service";
 import Projects from "./Projects";
-import Product from "./Product";
 import CartPage from "./CartPage";
 import Contact from "../Components/Contact";
+import Products from "./Products/Products";
 
 const AppRoutes = () => {
   return (
@@ -20,9 +20,8 @@ const AppRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="about" element={<About />} />
         <Route path="service" element={<Service />} />
-        <Route path="project" element={<Projects />} />
         <Route path="cart" element={<CartPage />} />
-        <Route path="product" element={<Product />} />
+        <Route path="products" element={<Products />} />
         <Route path="contact" element={<Contact />} />
       </Routes>
       <Footer />

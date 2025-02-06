@@ -59,9 +59,14 @@
 
 import { useState } from "react";
 import { ProductContext } from "../Context";
+import { useLocation } from "react-router-dom";
+import Header from "../Header";
 
 export const ProductProvider = ({ children }) => {
   const [CartItems, setCartItems] = useState([]);
+  const location = useLocation();
+
+  const showHeader = ["/about", "/service", "/cart","/contact"].includes(location.pathname);
 
   // Add item to the cart
   const addToCart = (product) => {
@@ -86,9 +91,10 @@ export const ProductProvider = ({ children }) => {
     );
   };
 
+
   return (
     <ProductContext.Provider
-      value={{ CartItems, setCartItems, addToCart, removeFromCart }}
+      value={{ CartItems, setCartItems, addToCart, removeFromCart,showHeader }}
     >
       {children}
     </ProductContext.Provider>

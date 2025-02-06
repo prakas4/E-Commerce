@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ProductContext } from './Context'; // Correct import path
+import Header from './Header';
 
 const CartPage = () => {
   const { CartItems, setCartItems, removeFromCart } = useContext(ProductContext);
@@ -23,8 +24,13 @@ const CartPage = () => {
     );
   };
 
+  const handleClearCart = () =>{
+    setCartItems([])
+  }
+
   return (
     <>
+    <Header />
       <div className="container my-5">
         <h2 className="text-center mb-4">Your Shopping Cart</h2>
         {CartItems.length === 0 ? (
@@ -71,7 +77,7 @@ const CartPage = () => {
                         className="btn btn-danger"
                         onClick={() => removeFromCart(item.id)}
                       >
-                        Remove
+                        <i class="fa-solid fa-trash"></i>
                       </button>
                     </td>
                   </tr>
@@ -85,7 +91,7 @@ const CartPage = () => {
             </div>
 
             <div className="text-center mt-4">
-              <button className="btn btn-success">Proceed to Checkout</button>
+              <button className="btn btn-danger" onClick={handleClearCart}><i class="fa-solid fa-trash"></i> Clear All</button>
             </div>
           </div>
         )}

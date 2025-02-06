@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import Header from './Header'
+import { ProductContext } from './Context'
 
 const Contact = () => {
+  const {showHeader}  = useContext(ProductContext)
   return (
    <>
+   {showHeader && <Header />}
    <div className="container-xxl py-5">
   <div className="container">
     <div className="row g-5">
