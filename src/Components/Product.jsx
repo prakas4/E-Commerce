@@ -1,16 +1,39 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import products from '../../product.json'
 import { ProductContext } from './Context';
 
 const Product = () => {
   const {CartItems,addToCart} = useContext(ProductContext)
-  const groupedItem = [];
-  for (let i = 0; i < products.length; i += 4) {
-    groupedItem.push(products.slice(i, i + 4));
+  const [groupedItem, setGroupedItem] = useState([]);
+
+const groupProducts = () => {
+  let itemsPerRow = 4; // Default (Desktop)
+
+  if (window.innerWidth < 576) {
+    itemsPerRow = 1; // Mobile
+  } else if (window.innerWidth < 768) {
+    itemsPerRow = 2; // Tablet
+  } else if (window.innerWidth < 992) {
+    itemsPerRow = 3; // Small Laptops
   }
+
+  const newGroupedItems = [];
+  for (let i = 0; i < products.length; i += itemsPerRow) {
+    newGroupedItems.push(products.slice(i, i + itemsPerRow));
+  }
+
+  setGroupedItem(newGroupedItems);
+};
+
+// Run on mount & when window resizes
+useEffect(() => {
+  groupProducts();
+  window.addEventListener("resize", groupProducts);
+  return () => window.removeEventListener("resize", groupProducts);
+}, [products]); // Recalculate if products change
   return (
    <>
-   <div className="container my-5">
+ <div className="container my-5">
   <div
     className="text-center mx-auto wow fadeInUp"
     data-wow-delay="0.1s"
@@ -27,45 +50,45 @@ const Product = () => {
       data-bs-ride="carousel"
     >
       <div className="carousel-inner">
-        {groupedItem.map((item3,index) => 
-        <div className={`carousel-item ${index === 0 ? 'active' : ''}`}
-        key={index}>
-          <div className="d-flex justify-content-center row g-3">
-            {/* Card 1 */}
-            {item3.map((item) =>
-            <div className="col-md-3" key={item.id}>
-            <div className="card">
-              <div className="position-relative">
-                <img
-                  src={item.image}
-                  className="card-img-top"
-                  alt="Product Image"
-                />
-                <span className="discount-badge">{item.discount}</span>
+        {groupedItem.map((item3, index) => (
+          <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
+            <div className="d-flex justify-content-center row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 h-100">
+              {item3.map((item) => (
+                <div className="col-md-3 d-flex align-items-stretch" key={item.id}>
+                <div className="card h-100">
+                  <div className="position-relative">
+                    <img
+                      src={item.image}
+                      className="card-img-top w-100"
+                      alt="Product Image"
+                    />
+                    <span className="discount-badge">{item.discount}</span>
+                  </div>
+                  <div className="card-body d-flex flex-column h-100">
+                    <h5 className="card-title price">
+                      ₹{item.offerPrice} <span className="original-price">₹{item.originalPrice}</span>
+                    </h5>
+                    <p className="card-text flex-grow-1">
+                      {item.name}
+                    </p>
+                    <p className="mb-1">
+                      <i className="bi bi-star-fill text-warning" />
+                      <i className="bi bi-star-fill text-warning" />
+                      <i className="bi bi-star-fill text-warning" /> {item.reviewes}
+                    </p>
+                    <p className="text-muted">{item.offer}</p>
+                    <button className="btn add-to-cart-btn w-100 mt-auto">
+                      Add to cart
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="card-body">
-                <h5 className="card-title price">
-                ₹{item.offerPrice} <span className="original-price">₹{item.originalPrice}</span>
-                </h5>
-                <p className="card-text">
-                  {item.name}
-                </p>
-                <p className="mb-1">
-                  <i className="bi bi-star-fill text-warning" />
-                  <i className="bi bi-star-fill text-warning" />
-                  <i className="bi bi-star-fill text-warning" /> {item.reviewes}
-                </p>
-                <p className="text-muted">{item.offer}</p>
-                <button className="btn add-to-cart-btn w-100" onClick={()=> addToCart(item)}>
-                  Add to cart
-                </button>
-              </div>
+              
+              ))}
             </div>
-          </div>)}
           </div>
-        </div>)}
-        
-        
+        ))}
+
         {/* Carousel Controls */}
         <button
           className="carousel-control-prev"
@@ -89,6 +112,8 @@ const Product = () => {
     </div>
   </div>
 </div>
+
+
 
    </>
   )
