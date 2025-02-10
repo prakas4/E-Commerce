@@ -25,7 +25,6 @@ const groupProducts = () => {
   setGroupedItem(newGroupedItems);
 };
 
-// Run on mount & when window resizes
 useEffect(() => {
   groupProducts();
   window.addEventListener("resize", groupProducts);
