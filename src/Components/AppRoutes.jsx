@@ -17,7 +17,7 @@ const AppRoutes = () => {
       <Topbar />
       <Navbar />
       <Routes>
-        <Route path="/E-Commerce" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="about" element={<About />} />
         <Route path="service" element={<Service />} />
         <Route path="cart" element={<CartPage />} />
