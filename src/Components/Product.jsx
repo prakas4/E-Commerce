@@ -29,7 +29,7 @@ useEffect(() => {
   groupProducts();
   window.addEventListener("resize", groupProducts);
   return () => window.removeEventListener("resize", groupProducts);
-}, [products]); // Recalculate if products change
+}, [products]); 
   return (
    <>
  <div className="container my-5">
